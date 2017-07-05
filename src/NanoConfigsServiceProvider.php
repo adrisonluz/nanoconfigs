@@ -2,6 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Config;
+use NanoSoluctions\NanoConfigs\Models\NanoUser;
+use NanoSoluctions\NanoConfigs\NanoMiddleware;
 
 class NanoConfigsServiceProvider extends ServiceProvider
 {
@@ -16,6 +19,8 @@ class NanoConfigsServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        $this->app['router']->aliasMiddleware('nano', NanoMiddleware::class);
 
         if(!$this->app->routesAreCached()){
             require __DIR__.'/Routes.php';
@@ -36,6 +41,19 @@ class NanoConfigsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Config::set('auth.providers', ['nano' => [
+            'driver' => 'eloquent',
+            'model' => NanoUser::class,
+        ]]);
+
+        Config::set('auth.guards', ['nano' => [
+            'driver' => 'session',
+            'provider' => 'nano',
+        ]]);
+
+        Config::set('auth.passwods.users.provider', 'nano');
+        Config::set('auth.defaults.guard', 'nano');
+
         $this->app->singleton('NanoConfigs', function ($app) {
             return new NanoConfigs();
         });

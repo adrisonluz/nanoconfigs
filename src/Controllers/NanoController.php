@@ -19,9 +19,7 @@ class NanoController extends BaseController {
     public $usuario_logado;
 
     public function __construct() {
-        if (Auth::check()) {
-            $this->usuario_logado = Auth::user();
-        }
+        $this->usuario_logado = Auth::guard('nano')->user();
     }
 
     /**

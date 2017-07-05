@@ -15,7 +15,6 @@ class NanoUserController extends NanoController {
         parent::__construct();
         parent::checkAcess('accessUsers');
 
-        //$this->middleware('auth');
         $this->retorno = array();
         $this->request = $request->except('_token');
         if (!empty($this->request))

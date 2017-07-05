@@ -12,10 +12,8 @@ class NanoAuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         $this->app['auth']->extend('nano',function()
         {
-
             return new NanoUserProvider();
         });
     }

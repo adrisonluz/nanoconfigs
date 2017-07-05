@@ -1,5 +1,7 @@
 <?php
-Route::group(['middleware' => 'web', 'prefix' => 'nano'], function () {
+Route::get('/login', ['uses' => NanoConfigs::_PATH_CONTROLLERS . '\NanoLoginController@showLoginForm', 'as' => 'nano.login']);
+
+Route::group(['middleware' => ['web','nano'], 'prefix' => 'nano'], function () {
     /* Rotas organizadas para usuários */
     Route::group(['prefix' => 'usuarios', 'where' => ['id' => '[0-9]+']], function () {
         Route::get('', ['uses' => NanoConfigs::_PATH_CONTROLLERS . '\NanoUserController@index', 'as' => 'nano.usuarios.index']);
