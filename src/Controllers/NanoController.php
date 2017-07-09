@@ -17,6 +17,7 @@ class NanoController extends BaseController {
         ValidatesRequests;
 
     public $usuario_logado;
+    public $errors = [];
 
     public function __construct() {
         $this->usuario_logado = Auth::guard('nano')->user();

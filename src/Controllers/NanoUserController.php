@@ -20,7 +20,7 @@ class NanoUserController extends NanoController {
         if (!empty($this->request))
             $this->retorno['request'] = $this->request;
 
-        $this->area = 'nano.usuarios';
+        $this->area = 'nano::usuarios';
 
         if (Session::has('mensagem')) {
             $this->retorno['mensagem'] = Session::get('mensagem');
@@ -38,7 +38,7 @@ class NanoUserController extends NanoController {
 
         $this->retorno['usuarios'] = $usuarios;
 
-        return view("nano.home", $this->retorno);
+        return view($this->area . ".index", $this->retorno);
     }
 
     /**

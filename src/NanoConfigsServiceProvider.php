@@ -26,11 +26,12 @@ class NanoConfigsServiceProvider extends ServiceProvider
             require __DIR__.'/Routes.php';
         }
 
-        $this->loadViewsFrom(base_path('resources/views'), 'nano');
+        $this->loadViewsFrom(__DIR__.'/Views', 'nano');
+        
         $this->publishes([
-            __DIR__.'/Views' => base_path('resources/views/nano'),
             __DIR__.'/Migrations' => base_path('database/migrations'),
-            __DIR__.'/Seeds' => base_path('database/seeds')
+            __DIR__.'/Seeds' => base_path('database/seeds'),
+            __DIR__.'/assets' => base_path('public/nanoassets')
         ], 'migrations');
     }
 

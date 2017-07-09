@@ -19,11 +19,11 @@ class NanoUserProvider implements UserProvider {
 
 	    if($qry->count() >0)
 	    {
-	        $user = $qry->select('id', 'login', 'name', 'email', 'password')->first();
+	        $user = $qry->select('id', 'email', 'name', 'login', 'password')->first();
 
 	        $attributes = array(
 	            'id' => $user->id,
-	            'login' => $user->login,
+	            'email' => $user->email,
 	            'password' => $user->password,
 	            'name' => $user->name,
 	        );
@@ -46,11 +46,11 @@ class NanoUserProvider implements UserProvider {
 
 	    if($qry->count() >0)
 	    {
-	        $user = $qry->select('id', 'login', 'name', 'email', 'password')->first();
+	        $user = $qry->select('id', 'email', 'name', 'login', 'password')->first();
 
 	        $attributes = array(
 	            'id' => $user->id,
-	            'login' => $user->login,
+	            'email' => $user->email,
 	            'password' => $user->password,
 	            'name' => $user->name,
 	        );
@@ -81,11 +81,11 @@ class NanoUserProvider implements UserProvider {
 	 */
 	public function retrieveByCredentials(array $credentials)
 	{
-	    $qry = NanoUser::where('login','=',$credentials['login']);
+	    $qry = NanoUser::where('email','=',$credentials['email']);
 
 	    if($qry->count() >0)
 	    {
-	        $user = $qry->select('id','login','name','email','password')->first();
+	        $user = $qry->select('id','email','name','login','password')->first();
 	        return $user;
 	    }
 	    return null;
@@ -100,11 +100,10 @@ class NanoUserProvider implements UserProvider {
 	 */
 	public function validateCredentials(Authenticatable $user, array $credentials)
 	{
-	    if($user->login == $credentials['login'] && $user->getAuthPassword() == md5($credentials['password'].\Config::get('constants.SALT')))
+	    if($user->email == $credentials['email'] && $user->getAuthPassword() == Hash::make($credentials['password']))
 	    {
-
-	        $user->last_login_time = Carbon::now();
-	        $user->save();
+	        //$user->last_email_time = Carbon::now();
+	        //$user->save();
 	        return true;
 	    }
 	    return false;
