@@ -1,4 +1,4 @@
-@extends('nano.layout')
+@extends('nano::layouts.nano')
 @section('content')
 
 <div class="container">
